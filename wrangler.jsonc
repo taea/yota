@@ -1,0 +1,15 @@
+{
+  // yota.kani.show — カニ秘書との与太話
+  // hibi（taea.kani.show）・kani.show と同じ型: Cloudflare Workers の静的 assets 配信
+  // Workers Builds（Git 連携）: build command = bundle install && bundle exec ruby build.rb
+  "name": "yota",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "yota.kani.show", "custom_domain": true }
+  ]
+}

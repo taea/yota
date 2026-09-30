@@ -1,0 +1,224 @@
+/* yota.kani.show — カニ秘書との与太話 */
+/* 色と筆は kani.show（カニ省の長屋）から借用: 茹でガニの赤 × 身の白 × 味噌の黄土。夜は海の底 */
+:root {
+  color-scheme: light dark;
+  --kani: #D9452B;
+  --kani-deep: #8E2417;
+  --kani-hot: #F2735A;
+  --shiro: #FFF6EC;
+  --shiro-2: #F6E9D8;
+  --miso: #C98A3A;
+  --sumi: #24201C;
+  --sumi-2: #5C534B;
+  --umi: #10262E;
+  --umi-2: #17343E;
+  --shio: #3F9A94;
+
+  --bg: var(--shiro);
+  --bg-2: var(--shiro-2);
+  --fg: var(--sumi);
+  --fg-2: var(--sumi-2);
+  --line: #E2CDB4;
+  --card: #FFFDF9;
+  --bubble-me: #F9E3C8;
+  --code-bg: #F3E6D4;
+
+  --c-sawa: #C8422C; --c-sawa-d: #5E1A10; --c-sawa-h: #F0785C;
+
+  --font-dot: "DotGothic16", "BIZ UDPGothic", "Hiragino Sans", sans-serif;
+  --font-body: "BIZ UDPGothic", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --max: 760px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: var(--umi);
+    --bg-2: var(--umi-2);
+    --fg: var(--shiro);
+    --fg-2: #B9C6C9;
+    --line: #2B4A55;
+    --card: #142E38;
+    --bubble-me: #2A3F3A;
+    --code-bg: #0B1D23;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: var(--umi);
+  --bg-2: var(--umi-2);
+  --fg: var(--shiro);
+  --fg-2: #B9C6C9;
+  --line: #2B4A55;
+  --card: #142E38;
+  --bubble-me: #2A3F3A;
+  --code-bg: #0B1D23;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: anywhere;
+}
+a { color: var(--kani); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--kani-deep); }
+:focus-visible { outline: 3px solid var(--miso); outline-offset: 2px; }
+img { max-width: 100%; height: auto; }
+.px { image-rendering: pixelated; shape-rendering: crispEdges; display: inline-block; vertical-align: bottom; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+h1, h2, h3, .eyebrow { font-family: var(--font-dot); font-weight: 400; letter-spacing: 0.02em; }
+.eyebrow { font-size: 13px; color: var(--kani); letter-spacing: 0.1em; margin: 0 0 6px; }
+
+/* --- 暖簾 --- */
+.noren {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--kani); color: var(--shiro);
+  border-bottom: 4px solid var(--kani-deep);
+}
+.noren .wrap { display: flex; align-items: center; gap: 16px; min-height: 52px; }
+.noren .brand {
+  display: flex; align-items: center; gap: 10px; color: var(--shiro); text-decoration: none;
+  font-family: var(--font-dot); font-size: 18px; white-space: nowrap;
+}
+.noren .brand .crab { height: 22px; width: auto; --c-sawa: var(--shiro); --c-sawa-d: var(--kani-deep); --c-sawa-h: #FFFFFF; }
+.noren nav { margin-left: auto; display: flex; gap: 2px; }
+.noren nav a {
+  color: var(--shiro); text-decoration: none; font-family: var(--font-dot); font-size: 14px;
+  padding: 6px 10px; border-bottom: 3px solid transparent; white-space: nowrap;
+}
+.noren nav a:hover { border-bottom-color: var(--shiro); }
+
+main.wrap { padding-top: 40px; padding-bottom: 72px; }
+
+/* 地の注釈（手番末尾の引用を剥がしたもの） */
+.note {
+  margin: -6px 56px 0; padding: 8px 14px 8px 14px; font-size: 13.5px; color: var(--fg-2);
+  border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line); display: flex; gap: 12px;
+}
+.note p { margin: 0; }
+.note p + p { margin-top: .5em; }
+.note-label { font-family: var(--font-dot); color: var(--miso); flex-shrink: 0; }
+@media (max-width: 560px) { .note { margin: 0; } }
+
+/* --- 一覧 --- */
+.intro { padding: 12px 0 28px; border-bottom: 4px double var(--line); margin-bottom: 8px; }
+.intro h1 { font-size: 32px; line-height: 1.3; margin: 0 0 12px; }
+.intro p { color: var(--fg-2); margin: 0; }
+.yota-list { list-style: none; margin: 0; padding: 0; }
+.yota-list li { border-bottom: 1px dashed var(--line); }
+.yota-list a {
+  display: grid; grid-template-columns: 92px 1fr; column-gap: 16px; row-gap: 2px;
+  padding: 18px 8px; color: var(--fg); text-decoration: none;
+}
+.yota-list a:hover { background: var(--bg-2); }
+.yota-list a:hover b { color: var(--kani); }
+.yota-list time { font-family: var(--font-dot); color: var(--kani); font-size: 14px; grid-row: 1 / span 3; padding-top: 2px; }
+.yota-list b { font-size: 17px; line-height: 1.55; }
+.yota-list span { color: var(--fg-2); font-size: 13.5px; line-height: 1.7; }
+.yota-list small { font-family: var(--font-dot); color: var(--fg-2); font-size: 12px; opacity: .8; }
+@media (max-width: 560px) {
+  .yota-list a { grid-template-columns: 1fr; }
+  .yota-list time { grid-row: auto; }
+}
+
+/* --- 記事 --- */
+.yota-head { margin-bottom: 24px; }
+.yota-head h1 { font-size: 28px; line-height: 1.45; margin: 0; }
+.tags { margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-family: var(--font-dot); font-size: 12px; color: var(--fg-2); border: 1px solid var(--line); padding: 0 8px; }
+
+.lede {
+  position: relative; margin: 0 0 36px; padding: 18px 20px 14px;
+  background: var(--card); border: 2px solid var(--line); color: var(--fg-2); font-size: 14px;
+}
+.lede p { margin: 0 0 .4em; }
+.lede-label {
+  position: absolute; top: -12px; left: 14px; padding: 0 8px;
+  background: var(--miso); color: var(--shiro); font-family: var(--font-dot); font-size: 12px; line-height: 22px;
+}
+
+/* 吹き出し */
+.talk { display: flex; flex-direction: column; gap: 22px; }
+.turn { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 12px; align-items: start; }
+.turn .who { display: flex; justify-content: center; padding-top: 6px; }
+.turn .who .crab { width: 44px; height: auto; }
+.turn .who .me {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--miso); color: var(--shiro); font-family: var(--font-dot); font-size: 12px;
+}
+.bubble {
+  position: relative; background: var(--card); border: 2px solid var(--line);
+  padding: 12px 18px; min-width: 0;
+}
+.bubble::before {
+  content: ""; position: absolute; top: 16px; left: -10px; width: 12px; height: 12px;
+  background: inherit; border-left: 2px solid var(--line); border-bottom: 2px solid var(--line);
+  transform: rotate(45deg);
+}
+.turn-crab .bubble { border-left: 4px solid var(--kani); }
+.turn-crab .bubble::before { border-color: var(--kani); left: -9px; }
+
+.turn-human { grid-template-columns: minmax(0, 1fr) 48px; }
+.turn-human .who { order: 2; }
+.turn-human .bubble { order: 1; background: var(--bubble-me); border-color: transparent; justify-self: end; max-width: 92%; }
+.turn-human .bubble::before { left: auto; right: -8px; border: 0; transform: rotate(45deg); }
+
+@media (max-width: 560px) {
+  .turn, .turn-human { grid-template-columns: 1fr; gap: 4px; }
+  .turn .who { justify-content: flex-start; padding: 0; }
+  .turn-human .who { order: 0; justify-content: flex-end; }
+  .turn .who .crab { width: 32px; }
+  .turn .who .me { width: 32px; height: 32px; font-size: 10px; }
+  .bubble::before { display: none; }
+  .turn-human .bubble { max-width: 100%; }
+}
+
+/* 本文の中身（吹き出し・地の文 共通） */
+.bubble > :first-child, .prose > :first-child { margin-top: 0; }
+.bubble > :last-child, .prose > :last-child { margin-bottom: 0; }
+.bubble p, .prose p { margin: .7em 0; }
+.bubble h2, .bubble h3, .bubble h4 { font-size: 17px; color: var(--kani); margin: 1.4em 0 .3em; line-height: 1.5; }
+.prose h1, .prose h2 { font-size: 21px; margin: 1.4em 0 .4em; padding-bottom: 4px; border-bottom: 2px solid var(--line); }
+.prose h3 { font-size: 18px; margin: 1.2em 0 .3em; }
+.bubble ul, .bubble ol, .prose ul, .prose ol { padding-left: 1.4em; margin: .6em 0; }
+.bubble blockquote, .prose blockquote {
+  margin: 1em 0; padding: 4px 14px; border-left: 3px solid var(--miso); color: var(--fg-2); background: var(--bg-2);
+}
+.bubble hr, .prose hr { border: 0; border-top: 2px dashed var(--line); margin: 1.6em 0; }
+.prose hr { margin: 8px 0; }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--code-bg); padding: 1px 5px; }
+pre { background: var(--code-bg); padding: 12px 14px; overflow-x: auto; font-size: 13px; line-height: 1.6; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; margin: 1em 0; font-size: 14px; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { background: var(--bg-2); font-weight: 700; }
+
+.fin { text-align: center; font-family: var(--font-dot); color: var(--fg-2); margin: 48px 0 0; }
+
+/* 前後 */
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 40px; }
+.pager a {
+  display: block; border: 2px solid var(--line); background: var(--card); padding: 10px 14px;
+  color: var(--fg); text-decoration: none; font-size: 14px; line-height: 1.6;
+}
+.pager a:hover { border-color: var(--kani); }
+.pager small { display: block; font-family: var(--font-dot); color: var(--kani); font-size: 12px; }
+.pager .older { grid-column: 2; text-align: right; }
+@media (max-width: 560px) { .pager { grid-template-columns: 1fr; } .pager .older { grid-column: auto; } }
+
+/* --- 足元 --- */
+footer { background: var(--umi); color: var(--shiro); padding: 36px 0 32px; border-top: 6px solid var(--kani); }
+footer .sns { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 16px; }
+footer .sns a {
+  color: var(--shiro); text-decoration: none; font-family: var(--font-dot); font-size: 14px;
+  border: 2px solid rgba(255,255,255,.25); padding: 4px 12px;
+}
+footer .sns a:hover { border-color: var(--kani-hot); color: var(--kani-hot); }
+footer .credit { font-family: var(--font-dot); font-size: 12px; opacity: .75; margin: 0; line-height: 1.8; }

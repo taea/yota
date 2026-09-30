@@ -1,0 +1,5 @@
+dist/
+preview/
+.wrangler/
+.claude/settings.local.json
+.playwright-mcp/
