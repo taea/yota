@@ -61,7 +61,7 @@ body {
   color: var(--fg);
   font-family: var(--font-body);
   font-size: 15.5px;
-  line-height: 1.9;
+  line-height: 2;
   -webkit-font-smoothing: antialiased;
   overflow-wrap: anywhere;
 }
@@ -136,7 +136,7 @@ main.wrap { padding-top: 40px; padding-bottom: 72px; }
 .tag { font-family: var(--font-dot); font-size: 12px; color: var(--fg-2); border: 1px solid var(--line); padding: 0 8px; }
 
 .lede {
-  position: relative; margin: 0 0 36px; padding: 18px 20px 14px;
+  position: relative; margin: 0 0 44px; padding: 18px 20px 14px;
   background: var(--card); border: 2px solid var(--line); color: var(--fg-2); font-size: 14px;
 }
 .lede p { margin: 0 0 .4em; }
@@ -146,7 +146,7 @@ main.wrap { padding-top: 40px; padding-bottom: 72px; }
 }
 
 /* 吹き出し */
-.talk { display: flex; flex-direction: column; gap: 22px; }
+.talk { display: flex; flex-direction: column; gap: 30px; }
 .turn { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 12px; align-items: start; }
 .turn .who { display: flex; justify-content: center; padding-top: 6px; }
 .turn .who .crab { width: 44px; height: auto; }
@@ -157,7 +157,7 @@ main.wrap { padding-top: 40px; padding-bottom: 72px; }
 }
 .bubble {
   position: relative; background: var(--card); border: 2px solid var(--line);
-  padding: 12px 18px; min-width: 0;
+  padding: 16px 22px; min-width: 0;
 }
 .bubble::before {
   content: ""; position: absolute; top: 16px; left: -10px; width: 12px; height: 12px;
@@ -185,16 +185,16 @@ main.wrap { padding-top: 40px; padding-bottom: 72px; }
 /* 本文の中身（吹き出し・地の文 共通） */
 .bubble > :first-child, .prose > :first-child { margin-top: 0; }
 .bubble > :last-child, .prose > :last-child { margin-bottom: 0; }
-.bubble p, .prose p { margin: .7em 0; }
-.bubble h2, .bubble h3, .bubble h4 { font-size: 17px; color: var(--kani); margin: 1.4em 0 .3em; line-height: 1.5; }
-.prose h1, .prose h2 { font-size: 21px; margin: 1.4em 0 .4em; padding-bottom: 4px; border-bottom: 2px solid var(--line); }
-.prose h3 { font-size: 18px; margin: 1.2em 0 .3em; }
-.bubble ul, .bubble ol, .prose ul, .prose ol { padding-left: 1.4em; margin: .6em 0; }
+.bubble p, .prose p { margin: 1em 0; }
+.bubble h2, .bubble h3, .bubble h4 { font-size: 17px; color: var(--kani); margin: 2em 0 .5em; line-height: 1.5; }
+.prose h1, .prose h2 { font-size: 21px; margin: 2.4em 0 .7em; padding-bottom: 4px; border-bottom: 2px solid var(--line); }
+.prose h3 { font-size: 18px; margin: 2em 0 .5em; }
+.bubble ul, .bubble ol, .prose ul, .prose ol { padding-left: 1.4em; margin: 1em 0; }
 .bubble blockquote, .prose blockquote {
   margin: 1em 0; padding: 4px 14px; border-left: 3px solid var(--miso); color: var(--fg-2); background: var(--bg-2);
 }
-.bubble hr, .prose hr { border: 0; border-top: 2px dashed var(--line); margin: 1.6em 0; }
-.prose hr { margin: 8px 0; }
+.bubble hr, .prose hr { border: 0; border-top: 2px dashed var(--line); margin: 2.2em 0; }
+.prose hr { margin: 20px 0; }
 code { font-family: var(--font-mono); font-size: .88em; background: var(--code-bg); padding: 1px 5px; }
 pre { background: var(--code-bg); padding: 12px 14px; overflow-x: auto; font-size: 13px; line-height: 1.6; }
 pre code { background: none; padding: 0; }
@@ -224,3 +224,4 @@ footer .sns a {
 }
 footer .sns a:hover { border-color: var(--kani-hot); color: var(--kani-hot); }
 footer .credit { font-family: var(--font-dot); font-size: 12px; opacity: .75; margin: 0; line-height: 1.8; }
+.bubble li, .prose li { margin: .35em 0; }
