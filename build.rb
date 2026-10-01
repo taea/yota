@@ -139,6 +139,7 @@ def load_posts
     next warn("skip (記事番号なし): #{File.basename(file)}") unless fm["number"]
 
     raw_title = fm["title"].to_s.strip
+    next if raw_title == "README" # カテゴリの説明書きは与太話じゃねぇ
     date = if (dm = raw_title.match(/(\d{4}-\d{2}-\d{2})/))
              Date.parse(dm[1])
            else
@@ -250,7 +251,7 @@ def render_index(posts)
           <time datetime="#{p.date.iso8601}">#{p.date.strftime("%Y.%m.%d")}</time>
           <b>#{h(p.title)}</b>
           #{%(<span>#{h(p.excerpt)}</span>) unless p.excerpt.empty?}
-          <small>#{p.turn_count} 手</small>
+          <small>#{p.turn_count.zero? ? "随筆" : "#{p.turn_count} 手"}</small>
         </a>
       </li>
     HTML
