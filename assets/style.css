@@ -72,7 +72,9 @@ img { max-width: 100%; height: auto; }
 .px { image-rendering: pixelated; shape-rendering: crispEdges; display: inline-block; vertical-align: bottom; }
 
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
-h1, h2, h3, .eyebrow { font-family: var(--font-dot); font-weight: 400; letter-spacing: 0.02em; }
+/* 見出しは読み物の字（BIZ UDPGothic 太字）。ドット字は日付・札・暖簾など小物だけに */
+h1, h2, h3, h4 { font-family: var(--font-body); font-weight: 700; letter-spacing: 0.01em; }
+.eyebrow { font-family: var(--font-dot); font-weight: 400; letter-spacing: 0.02em; }
 .eyebrow { font-size: 13px; color: var(--kani); letter-spacing: 0.1em; margin: 0 0 6px; }
 
 /* --- 暖簾 --- */
