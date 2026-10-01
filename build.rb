@@ -130,7 +130,7 @@ end
 
 def load_posts
   Dir.glob(File.join(ESA_POSTS, "*.md")).filter_map do |file|
-    raw = File.read(file)
+    raw = File.read(file).gsub("\r\n", "\n") # esa は CRLF 混じりで来ることがある
     m = raw.match(/\A---\n(.*?)\n---\n/m)
     next warn("skip (frontmatter なし): #{File.basename(file)}") unless m
 
