@@ -17,7 +17,7 @@ hibi（taea.kani.show）と同じ型。SSG は hibi の build.rb の弟分、意
 
 ## 中身
 
-- `build.rb` — 素朴 SSG。`esa/*.md` → `dist/e{番号}/`・一覧・RSS
+- `build.rb` — 素朴 SSG。`esa/*.md` → `dist/e{番号}/`・一覧・RSS・`latest.json`（最新8本。kani.show の「与太話」の節が生で引く。`_headers` で CORS を開けてある）
   - 本文の `**taea:**` / `**🦀:**` / `**Claude:**` で手番を切って吹き出しにする
   - 冒頭の引用 = 前口上、手番末尾の引用 = 注（地の注釈）として吹き出しから剥がす
   - タイトル末尾の `: YYYY-MM-DD` が日付。無ければ created_at の営業日（朝4時区切り）

@@ -25,6 +25,7 @@ require "date"
 require "time"
 require "cgi"
 require "yaml"
+require "json"
 
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
@@ -291,6 +292,26 @@ def render_feed(posts)
   XML
 end
 
+# kani.show の「与太話」の節が生で引く最新一覧（CORS は _headers で開ける）
+def render_latest(posts)
+  JSON.pretty_generate(
+    site: SITE_TITLE, url: SITE_URL, count: posts.size,
+    posts: posts.first(8).map { |p|
+      { number: p.number, title: p.title, url: p.url, date: p.date.iso8601,
+        excerpt: p.excerpt, turns: p.turn_count }
+    },
+  )
+end
+
+# Cloudflare Workers static assets の _headers。latest.json と feed.xml はよその窓（kani.show）からも読める
+HEADERS = <<~TXT
+  /latest.json
+    Access-Control-Allow-Origin: *
+    Cache-Control: public, max-age=300
+  /feed.xml
+    Access-Control-Allow-Origin: *
+TXT
+
 # --- build ---
 posts = load_posts.sort_by { [_1.date, _1.number] }.reverse
 FileUtils.rm_rf(DIST)
@@ -304,6 +325,8 @@ end
 
 File.write(File.join(DIST, "index.html"), render_index(posts))
 File.write(File.join(DIST, "feed.xml"), render_feed(posts))
+File.write(File.join(DIST, "latest.json"), render_latest(posts))
+File.write(File.join(DIST, "_headers"), HEADERS)
 File.write(File.join(DIST, "404.html"),
            layout(title: "404 | #{SITE_TITLE}",
                   body: %(<section class="intro"><h1>404</h1><p>その与太話はまだ話してないか、お蔵に入っちまったかだ。<a href="/">一覧に戻る</a></p></section>)))
