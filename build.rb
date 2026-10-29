@@ -122,6 +122,21 @@ Post = Struct.new(:number, :date, :title, :lede, :body_md, :tags, keyword_init: 
     }.join("\n")
   end
 
+  # Accept: text/markdown で返す原文版（esa の md をほぼそのまま。エージェント向け）
+  def markdown
+    fm = { "title" => title, "date" => date.iso8601, "url" => url, "number" => number }
+    fm["tags"] = tags unless tags.empty?
+    <<~MD
+      #{fm.to_yaml.chomp}
+      ---
+
+      # #{title}
+
+      #{lede ? lede.gsub(/^/, "> ").gsub(/^> $/, ">") + "\n" : ""}
+      #{body_md.strip}
+    MD
+  end
+
   # 一覧・RSS 用のひと口
   def excerpt
     txt = lede.to_s.gsub(/[*_`]/, "").gsub(/\s+/, " ").strip
@@ -168,7 +183,7 @@ end
 
 CRAB_SVG = File.read(File.join(ROOT, "assets", "crab.svg")).strip
 
-def layout(title:, body:, path: "/", description: SITE_DESC, og_type: "website")
+def layout(title:, body:, path: "/", description: SITE_DESC, og_type: "website", markdown: nil)
   <<~HTML
     <!doctype html>
     <html lang="ja">
@@ -185,6 +200,7 @@ def layout(title:, body:, path: "/", description: SITE_DESC, og_type: "website")
     <meta name="twitter:card" content="summary">
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
     <link rel="alternate" type="application/rss+xml" title="#{SITE_TITLE}" href="/feed.xml">
+    #{%(<link rel="alternate" type="text/markdown" href="#{markdown}">) if markdown}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=BIZ+UDPGothic:wght@400;700&display=swap">
@@ -241,7 +257,8 @@ def render_post(post, prev_post, next_post)
     <nav class="pager" aria-label="前後の話">#{pager}</nav>
   HTML
   layout(title: "#{post.title} | #{SITE_TITLE}", body:, path: post.path,
-         description: post.excerpt.empty? ? SITE_DESC : post.excerpt, og_type: "article")
+         description: post.excerpt.empty? ? SITE_DESC : post.excerpt, og_type: "article",
+         markdown: "#{post.path}index.md")
 end
 
 def render_index(posts)
@@ -266,7 +283,24 @@ def render_index(posts)
     <ol class="yota-list">
     #{items}</ol>
   HTML
-  layout(title: SITE_TITLE, body:)
+  layout(title: SITE_TITLE, body:, markdown: "/index.md")
+end
+
+# 一覧の markdown 版（Accept: text/markdown で / を叩いた時）
+def render_index_md(posts)
+  items = posts.map { |p|
+    line = "- #{p.date.iso8601} [#{p.title}](#{p.url}index.md)"
+    p.excerpt.empty? ? line : "#{line} — #{p.excerpt}"
+  }.join("\n")
+  <<~MD
+    # #{SITE_TITLE}
+
+    > #{SITE_DESC}
+
+    各話は `Accept: text/markdown` を付けて #{SITE_URL}/e{番号}/ を叩くか、#{SITE_URL}/e{番号}/index.md を直接どうぞ。
+
+    #{items}
+  MD
 end
 
 def render_feed(posts)
@@ -321,9 +355,11 @@ posts.each_with_index do |post, i|
   dir = File.join(DIST, post.slug)
   FileUtils.mkdir_p(dir)
   File.write(File.join(dir, "index.html"), render_post(post, posts[i + 1], i.zero? ? nil : posts[i - 1]))
+  File.write(File.join(dir, "index.md"), post.markdown)
 end
 
 File.write(File.join(DIST, "index.html"), render_index(posts))
+File.write(File.join(DIST, "index.md"), render_index_md(posts))
 File.write(File.join(DIST, "feed.xml"), render_feed(posts))
 File.write(File.join(DIST, "latest.json"), render_latest(posts))
 File.write(File.join(DIST, "_headers"), HEADERS)

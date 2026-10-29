@@ -4,8 +4,12 @@
   // Workers Builds（Git 連携）: build command = bundle install && bundle exec ruby build.rb
   "name": "yota",
   "compatibility_date": "2026-10-01",
+  // 門番: Accept: text/markdown の客に原文 md を出す（"/" と "/e*" だけ先に通す）
+  "main": "src/worker.js",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/", "/e*"],
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
