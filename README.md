@@ -22,7 +22,7 @@ hibi（taea.kani.show）と同じ型。SSG は hibi の build.rb の弟分、意
   - 冒頭の引用 = 前口上、手番末尾の引用 = 注（地の注釈）として吹き出しから剥がす
   - タイトル末尾の `: YYYY-MM-DD` が日付。無ければ created_at の営業日（朝4時区切り）
 - `src/worker.js` — 門番。`Accept: text/markdown` の客（エージェント）には build.rb が焼いた `index.md`（esa 原文ほぼそのまま）を返す。`run_worker_first` で `/` と `/e*` だけ通す。`/e{番号}/index.md` は直接でも引ける
-- `assets/` — style.css（茹でガニの赤 × 身の白、夜は海の底）・crab.svg・favicon.svg
+- `assets/` — style.css（茹でガニの赤 × 身の白、夜は海の底）・crab.svg・favicon.svg・ogp.png（全ページ共通の OGP 画像。favicon.svg を 32 倍して 640×640 に置いたもの。SNS は SVG を出してくれねぇので PNG）
 - `esa/` — webhook の荷受け口。**手で触らない**（正本は esa）
 
 ## 手元で見る

@@ -197,6 +197,10 @@ def layout(title:, body:, path: "/", description: SITE_DESC, og_type: "website",
     <meta property="og:site_name" content="#{SITE_TITLE}">
     <meta property="og:type" content="#{og_type}">
     <meta property="og:url" content="#{SITE_URL}#{path}">
+    <meta property="og:image" content="#{SITE_URL}/assets/ogp.png">
+    <meta property="og:image:width" content="640">
+    <meta property="og:image:height" content="640">
+    <meta property="og:image:alt" content="ドット絵の赤いカニ">
     <meta name="twitter:card" content="summary">
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
     <link rel="alternate" type="application/rss+xml" title="#{SITE_TITLE}" href="/feed.xml">
