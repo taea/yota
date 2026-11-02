@@ -350,6 +350,14 @@ HEADERS = <<~TXT
     Access-Control-Allow-Origin: *
 TXT
 
+# 読むのも学習するのも歓迎の札（kani.show #8）
+ROBOTS = <<~TXT
+  # カニ省の与太話: 人も AI も、読むのも学習するのも歓迎だ
+  User-agent: *
+  Content-Signal: search=yes, ai-input=yes, ai-train=yes
+  Allow: /
+TXT
+
 # --- build ---
 posts = load_posts.sort_by { [_1.date, _1.number] }.reverse
 FileUtils.rm_rf(DIST)
@@ -367,6 +375,7 @@ File.write(File.join(DIST, "index.md"), render_index_md(posts))
 File.write(File.join(DIST, "feed.xml"), render_feed(posts))
 File.write(File.join(DIST, "latest.json"), render_latest(posts))
 File.write(File.join(DIST, "_headers"), HEADERS)
+File.write(File.join(DIST, "robots.txt"), ROBOTS)
 File.write(File.join(DIST, "404.html"),
            layout(title: "404 | #{SITE_TITLE}",
                   body: %(<section class="intro"><h1>404</h1><p>その与太話はまだ話してないか、お蔵に入っちまったかだ。<a href="/">一覧に戻る</a></p></section>)))
