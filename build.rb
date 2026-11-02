@@ -352,7 +352,7 @@ TXT
 
 # 読むのも学習するのも歓迎の札（kani.show #8）
 ROBOTS = <<~TXT
-  # カニ省の与太話: 人も AI も、読むのも学習するのも歓迎だ
+  # Humans and AIs are all welcome to read and learn here.
   User-agent: *
   Content-Signal: search=yes, ai-input=yes, ai-train=yes
   Allow: /
